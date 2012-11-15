@@ -2,6 +2,10 @@
 $alphabet = array( "a" , "b" , "c" , "d" , "e" , "f" , "g" , "h" , "i" , "j" , "k" , "l" , "m" , "n" , "o" , "p" , "q" , "r" , "s" , "t" , "u" , "v" , "w" , "x" , "y" , "z");
 $data_dir = ".." . DIRECTORY_SEPARATOR . "data";
 
+if(!is_dir($data_dir)) {
+    @mkdir($data_dir);
+}
+
 foreach($alphabet as $char) {
     $path = $data_dir . DIRECTORY_SEPARATOR . $char;
     if(!is_dir($path)) {
@@ -19,7 +23,7 @@ foreach($alphabet as $char) {
 	    chmod($path_second , "0777");
         }
         
-        $json_output = file_get_contents("http://api.pearson.com/longman/dictionary/entry.xml?q=" . $full_char . "&apikey=3452afbefdf2978f76ffa7bae5f694e5&jsonp=xml");
+        $json_output = file_get_contents("http://api.pearson.com/longman/dictionary/entry.xml?q=" . $full_char . "*&apikey=3452afbefdf2978f76ffa7bae5f694e5&jsonp=xml");
         $file = fopen($file_path , "w");
         fwrite($file , $json_output);
 	chmod($file , "0777");
